@@ -1,0 +1,83 @@
+<%- include('../includes/head.ejs') %>
+<body>
+<%- include('../includes/navbar.ejs') %>
+<div class="container">
+<div class="row">
+<%- include('../includes/menu.ejs') %>
+<!-- content -->
+<div class="col-md-9">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <% if(edit) {%>  Edit Student Assessment <% }else{ %> Add Student Assessment <% } %> 
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <form <% if(edit) {%> action="/student-edit" <% }else{ %> action="/student-add" <% } %>  method="post">
+                <% if(edit) {%> 
+                <input type="hidden" name="id" value="<%= student.id %>" readonly>
+                <% } %> 
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="name" class="control-label col-md-3">Name Student</label>
+                        <div class="col-md-8">
+                            <input type="text" <% if(edit) {%> value="<%= student.name %>" <% } %>   name="name" id="name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company" class="control-label col-md-3">Class</label>
+                        <div class="col-md-8">
+                            <input type="text" value="<%= edit===true ? student.clas : "" %>"  name="clas" id="company" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label col-md-3">Nik Student</label>
+                        <div class="col-md-8">
+                            <input type="text" <% if(edit) {%> value="<%= student.nik %>" <% } %>  name="nik" id="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label col-md-3">Image</label>
+                        <div class="col-md-8">
+                            <input type="text" <% if(edit) {%> value="<%= student.image %>" <% } %> name="image" id="file" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="control-label col-md-3">Gender</label>
+                        <div class="col-md-8">
+                            <select name="gender" class="form-control">
+                                <option value="Male" <% if(edit) {%> <% if(student.gender==="Male") {%> selected <% } %>  <% } %> >Male</option>
+                                <option value="Female" <% if(edit) {%> <% if(student.gender==="Female") {%> selected <% } %>  <% } %> >Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="control-label col-md-3">Address</label>
+                        <div class="col-md-8">
+                            <textarea name="address" id="address" rows="3"
+                                class="form-control"><% if(edit){%><%=student.nik%><%}%></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                        <button type="submit" class="btn btn-primary"> <% if(edit) {%> Update <% }else{ %> Save <% } %>   </button>
+                        <a href="/student-list" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+</div>
+<!-- content -->
+<%- include('../includes/footer.ejs') %>
+</body>
+</html>

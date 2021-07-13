@@ -1,0 +1,56 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <%- include('../includes/navbar.ejs') %>
+    <div class="container">
+        <div class="row">
+            <%- include('../includes/menu.ejs') %>
+            <!-- content -->
+            <div class="col-md-9">
+                <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Student List
+                    <a href="/student-list/add" class="btn btn-primary btn-sm pull-right">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Added Students
+                    </a>
+                </div>
+                  <table class="table">
+                    <% if(student.length > 0) { %>
+                      <% student.forEach(function(students){ //for(let students of student) {%>  
+                    <tr>
+                      <td class="middle">
+                        <div class="media">
+                          <div class="media-left">
+                            <a href="#">
+                              <img class="media-object" src="<%= students.image %>" height="100px" width="100px" alt="...">
+                            </a>
+                          </div>
+                          <div class="media-body">
+                            <address>
+                                <b>Name Student</b>          : <%= students.name %> <br>
+                                <b>Gender</b>                : <%= students.gender %><br>
+                                <b> Address </b>             : <%= students.address %><br>
+                                <b> Class </b>               : <%= students.clas %><br>
+                                <b> Nik </b>                 : <%= students.nik %>
+                            </address>
+                          </div>
+                        </div>
+                      </td>
+                      <td width="100" class="middle">
+                        <div>
+                          <a href="/student-list/<%= students.id %>?edit=true " class="btn btn-circle btn-default btn-xs" title="Edit">
+                            <i class="fas fa-pencil-alt"></i>
+                          </a>
+                          <form action="/student-delete" method="post">
+                            <input type="hidden" name="id" value="<%= students.id %>">
+                            <button type="submit" class="btn btn-circle btn-danger btn-xs"><i class="fas fa-trash"></i></button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }) } %> 
+                  </table>
+               </div>
+               <%- include('../includes/footer.ejs') %>
+</body>
+</html>
