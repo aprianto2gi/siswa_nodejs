@@ -1,14 +1,17 @@
 const studentModel = require('../../models/student/studentModel');
 
 exports.getList = (req,res,next)=>{
-    studentModel.fetchAll(student=>{
-        //console.log(student);
+    studentModel.fetchAll()
+    .then(([rows,fieldData]) => {
         res.render('student/student-list',{
             title: "Student List",
             path: '/student-list',
-            student: student
+            student: rows
         })
-    })
+    }).catch((err) => {
+        console.log(err);
+    });
+    
 }
 
 exports.getAddstudent=(req,res,next)=>{
@@ -28,7 +31,12 @@ exports.postAddStudent=(req,res,next)=>{
     const gender= i.gender;
     const address= i.address; const id=null;
     const Student = new studentModel(id,name,clas,nik,image,gender,address);
-    Student.save(); res.redirect('/student-list');
+    Student.save().then(() => {
+        res.redirect('/student-list');
+    }).catch((err) => {
+        console.log(err);
+    });
+    
 }
 
 exports.getEditStudent=(req,res,next)=>{
@@ -37,14 +45,16 @@ exports.getEditStudent=(req,res,next)=>{
         res.redirect('/');
     }
     const id= req.params.i;
-    studentModel.FindById(id,student=>{
+    studentModel.FindById(id).then(([result]) => {
         res.render('student/addStudent',{
             title: "Edit Student",
             path: '/student-list',
-            student: student,
+            student: result[0],
             edit: true
         })
-    })
+    }).catch((err) => {
+        console.log(err);
+    });
 }
 
 exports.postEditStudent=(req,res,next)=>{
@@ -57,11 +67,18 @@ exports.postEditStudent=(req,res,next)=>{
     const gender= i.gender;
     const address= i.address;
     const Student = new studentModel(id,name,clas,nik,image,gender,address);
-    Student.save(); res.redirect('/student-list');
+    Student.save().then(() => {
+        res.redirect('/student-list');    
+    }).catch((err) => {
+        console.log(err);
+    });
 }
 
 exports.delStudent=(req,res,next)=>{
     const id=req.body.id;
-    studentModel.deleteStudent(id);
-    res.redirect('/student-list');
+    studentModel.deleteStudent(id).then((result) => {
+        res.redirect('/student-list');
+    }).catch((err) => {
+        console.log(err);
+    });
 }

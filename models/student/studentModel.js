@@ -29,44 +29,22 @@ module.exports =class Student{
     }
 
     save(){
-        getStudentFromFile(student=>{
-            if(this.id){
-                const studentIndex= student.findIndex(stud=> stud.id === this.id);
-                const updateStudent= [...student];
-                updateStudent[studentIndex]=this;
-                fs.writeFile(p,JSON.stringify(updateStudent),(err)=>{
-                    console.log(err);
-                })
-            }else{
-                this.id= Math.random().toString();
-                student.push(this);
-                fs.writeFile(p,JSON.stringify(student),(err)=>{
-                    console.log(err);
-                })  
-            }
-        })
+        if(this.id){
+            return db.execute(`UPDATE student_tbl SET name="${this.name}",clas="${this.clas}",nik="${this.nik}",image="${this.image}",gender="${this.gender}",address="${this.address}" WHERE id="${this.id}" `)
+        }else{
+            return db.execute('INSERT INTO student_tbl (name,clas,nik,image,gender,address) VALUES (?,?,?,?,?,?)',[this.name,this.clas,this.nik,this.image,this.gender,this.address]);
+        }
     }
 
-    // static fetchAll(call){
-    //     getStudentFromFile(call);
-    // }
     static fetchAll(){
         return db.execute("SELECT * FROM student_tbl");
     }
 
-    static FindById(id,call){
-        getStudentFromFile(student=>{
-            const students= student.find(p => p.id === id);
-            call(students);
-        })
+    static FindById(id){
+        return db.execute("SELECT * FROM student_tbl WHERE id=?",[id]);
     }
 
     static deleteStudent(id){
-        getStudentFromFile(student=>{
-            const studentDelete = student.filter(stud => stud.id !== id);
-            fs.writeFile(p,JSON.stringify(studentDelete),(err)=>{
-                console.log(err);
-            })
-        })
+        return db.execute("DELETE FROM student_tbl WHERE id=?",[id]);
     }
 }

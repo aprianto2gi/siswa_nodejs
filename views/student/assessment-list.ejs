@@ -18,43 +18,51 @@
 
             <div class="panel panel-info">
                 <table class="table">
+                    <% if(assessment.length>0) {%>
+                        <% assessment.forEach(function(ass){ %> 
                     <tr>
                         <td class="middle">
                             <div class="media">
                                 <div class="media-left">
                                     <a href="#">
                                         <img class="media-object"
-                                            src="https://4.bp.blogspot.com/-_k5EbzYYHA0/WFgNnIW6cwI/AAAAAAAAAFM/wPuFPnRyQWsk3eArp0MksAdWh3Ev1oYNACLcB/s1600/universitas%2Bpakuan.png"
+                                            src="<%=ass.image %>"
                                             height="100px" width="100px" alt="...">
 
                                     </a>
                                 </div>
                                 <div class="media-body">
                                     <address>
-                                        Kelas : 3<br>
-                                        Nama Siswa : nama<br>
-                                        Jenis Kelasmin : Laki-laki<br>
-                                        Nik : 340122
+                                        Kelas : <%=ass.clas %><br>
+                                        Nama Siswa : <%= ass.name %><br>
+                                        Jenis Kelasmin :<%= ass.gender%><br>
+                                        Nik : <%=ass.nik%> 
                                     </address>
                                 </div>
                                 <div class="media-body">
                                     <address>
-                                        Nilai Anda : 20
+                                        Nilai Anda : <%=ass.score %> 
                                     </address>
                                 </div>
                             </div>
                         </td>
                         <td width="100" class="middle">
                             <div>
-                                <a href="#" class="btn btn-circle btn-default btn-xs" title="Edit">
+                                <a href="/assessment/<%=ass.id %>?edit=true" class="btn btn-circle btn-default btn-xs" title="Edit">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <a href="#" class="btn btn-circle btn-danger btn-xs" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                <form action="/assessment-delete" method="post">
+                                    <input type="hidden" name="id" value="<%= ass.id %>">
+                                    <button type="submit" class="btn btn-circle btn-danger btn-xs"><i class="fas fa-trash"></i></button>
+                                  </form>
                             </div>
                         </td>
                     </tr>
+                    <% }) }else {%>
+                    <tr>
+                        <td>Data Not Found</td>
+                    </tr>
+                    <% } %> 
                 </table>
             </div>
 
