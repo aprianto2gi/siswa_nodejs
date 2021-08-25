@@ -12,10 +12,16 @@
     </div>
     <div class="panel-body">
         <div class="form-horizontal">
-            <form <% if(edit) {%> action="/student-edit" <% }else{ %> action="/student-add" <% } %>  method="post">
+            <form <% if(edit) {%> action="/student-edit" <% }else{ %> action="/student-add" <% } %>  method="post" enctype="multipart/form-data">
+                <%- include('../csrf/csrf.ejs') %>
                 <% if(edit) {%> 
                 <input type="hidden" name="id" value="<%= student.id %>" readonly>
-                <% } %> 
+                <% } %>
+                <% if(message){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= message %> 
+                    </div>
+                <% } %>
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
@@ -39,7 +45,7 @@
                     <div class="form-group">
                         <label for="email" class="control-label col-md-3">Image</label>
                         <div class="col-md-8">
-                            <input type="text" <% if(edit) {%> value="<%= student.image %>" <% } %> name="image" id="file" class="form-control">
+                            <input type="file" <% if(edit) {%> value="<%= student.image %>" <% } %> name="image" id="file" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">

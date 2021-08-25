@@ -14,7 +14,12 @@
                         Added Students
                     </a>
                 </div>
-                  <table class="table">
+                <% if(message){ %>
+                  <div class="alert alert-success" role="alert">
+                      <%= message %> 
+                  </div>
+                <% } %>
+                  <table class="table" id="table">
                     <% if(student.length > 0) { %>
                       <% student.forEach(function(students){ //for(let students of student) {%>  
                     <tr>
@@ -41,16 +46,48 @@
                           <a href="/student-list/<%= students.id %>?edit=true " class="btn btn-circle btn-default btn-xs" title="Edit">
                             <i class="fas fa-pencil-alt"></i>
                           </a>
-                          <form action="/student-delete" method="post">
+                          
+                            <%- include('../csrf/csrf.ejs') %>
                             <input type="hidden" name="id" value="<%= students.id %>">
-                            <button type="submit" class="btn btn-circle btn-danger btn-xs"><i class="fas fa-trash"></i></button>
-                          </form>
+                            <button type="button" onclick="deletestudent(this)" class="btn btn-circle btn-danger btn-xs"><i class="fas fa-trash"></i></button>
+                          
                         </div>
                       </td>
                     </tr>
                     <% }) } %> 
                   </table>
                </div>
+               <div class="text-center">
+                <nav>
+                  <ul class="pagination">
+                    <li>
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li >
+                      <% if(currentPage !== 1 && PreviousPage !== 1) {%>
+                        <a href="?page=1">1</a>
+                            <% } %>
+                            <% if(hasPrevious) {%>
+                                  <a href="?page=<%= PreviousPage %>"><%= PreviousPage %></a>
+                            <% } %>
+                            <a href="?page=<%= currentPage %>" class="active"><%= currentPage %></a>
+                            <% if(hasNextPage) {%>
+                                  <a href="?page=<%= nextPage %>"><%= nextPage %></a>
+                            <% } %>
+                            <% if(lastPage !== currentPage && nextPage !== lastPage) {%>
+                                  <a href="?page=<%= lastPage %>" ><%= lastPage %></a>
+                            <% } %>
+                    </li>
+                    <li>
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+          </div>
                <%- include('../includes/footer.ejs') %>
 </body>
 </html>

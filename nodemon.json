@@ -1,0 +1,10 @@
+{
+    "env": {
+        "namedatabase": "node_tutor",
+        "dbusername": "root",
+        "dbengine": "mysql",
+        "dbhost": "localhost",
+        "SOCKETURL":"http://localhost:5000",
+        "PORT":5000
+    }
+}

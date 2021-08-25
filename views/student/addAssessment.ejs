@@ -15,14 +15,22 @@
     <div class="row">
         <div class="col-md-8">
 
-        <form <% if(edit) {%> action="/assessment-edit" <% }else{ %> action="/assessment-add" <% } %>  method="post">
+        <form <% if(edit) {%> action="/assessment-edit" <% }else{ %> action="/assessment-add" <% } %>  method="post" enctype="multipart/form-data">
+            <%- include('../csrf/csrf.ejs') %>
+            <% if(message){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= message %> 
+                </div>
+            <% } %>
             <% if(edit) {%> <input type="hidden" value="<%=assessment.id %>" name="id" id="id"> <% } %>  
             <div class="form-group">
                 <label for="email" class="control-label col-md-3">Nik</label>
                 <div class="col-md-8">
                       <select name="student_id" class="form-control">
                         <% if(edit) {%> 
-                        <option selected value="<%= assessment.id%>"><%= assessment.nik%> - <%=assessment.name %></option><% } %> 
+                        <option selected value="<%= assessment.student_tbl.id%>"><%= assessment.student_tbl.nik%> - <%=assessment.student_tbl.name %></option>
+                        <% } %>
+                        <option value="-">-</option>
                         <% if(student.length>0) {%> 
                         <% student.forEach(function(student){ %> 
                         <option value="<%= student.id%>"><%= student.nik%> - <%=student.name %></option>

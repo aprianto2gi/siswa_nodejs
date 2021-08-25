@@ -17,7 +17,12 @@
             </div>
 
             <div class="panel panel-info">
-                <table class="table">
+                <% if(message){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= message %> 
+                    </div>
+                <% } %> 
+                <table class="table" id="table">
                     <% if(assessment.length>0) {%>
                         <% assessment.forEach(function(ass){ %> 
                     <tr>
@@ -26,17 +31,17 @@
                                 <div class="media-left">
                                     <a href="#">
                                         <img class="media-object"
-                                            src="<%=ass.image %>"
+                                            src="<%=ass.student_tbl.image %>"
                                             height="100px" width="100px" alt="...">
 
                                     </a>
                                 </div>
                                 <div class="media-body">
                                     <address>
-                                        Kelas : <%=ass.clas %><br>
-                                        Nama Siswa : <%= ass.name %><br>
-                                        Jenis Kelasmin :<%= ass.gender%><br>
-                                        Nik : <%=ass.nik%> 
+                                        Kelas : <%=ass.student_tbl.clas %><br>
+                                        Nama Siswa : <%= ass.student_tbl.name %><br>
+                                        Jenis Kelasmin :<%= ass.student_tbl.gender%><br>
+                                        Nik : <%=ass.student_tbl.nik%> 
                                     </address>
                                 </div>
                                 <div class="media-body">
@@ -52,6 +57,7 @@
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 <form action="/assessment-delete" method="post">
+                                    <%- include('../csrf/csrf.ejs') %>
                                     <input type="hidden" name="id" value="<%= ass.id %>">
                                     <button type="submit" class="btn btn-circle btn-danger btn-xs"><i class="fas fa-trash"></i></button>
                                   </form>
@@ -71,6 +77,37 @@
 
         </div>
     </div>
+    <div class="text-center">
+        <nav>
+          <ul class="pagination">
+            <li>
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li >
+              <% if(currentPage !== 1 && PreviousPage !== 1) {%>
+                <a href="?page=1">1</a>
+                    <% } %>
+                    <% if(hasPrevious) {%>
+                          <a href="?page=<%= PreviousPage %>"><%= PreviousPage %></a>
+                    <% } %>
+                    <a href="?page=<%= currentPage %>" class="active"><%= currentPage %></a>
+                    <% if(hasNextPage) {%>
+                          <a href="?page=<%= nextPage %>"><%= nextPage %></a>
+                    <% } %>
+                    <% if(lastPage !== currentPage && nextPage !== lastPage) {%>
+                          <a href="?page=<%= lastPage %>" ><%= lastPage %></a>
+                    <% } %>
+            </li>
+            <li>
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+  </div>
     <!-- content -->
     <%- include('../includes/footer.ejs') %>
 </body>
