@@ -3,6 +3,7 @@
         <a href="/home"class="list-group-item  <%= path==='/'? 'active' : '' %>  ">Home<span class="badge"></span></a>
         <a href="/assessment" class="list-group-item <%= path==='/assessment'? 'active' : '' %>  ">Penilaian Siswa<span class="badge"></span></a>
         <a href="/student-list" class="list-group-item <%= path==='/student-list'?'active':'' %>  ">Student list<span class="badge"></span></a>
+        <a href="/report" target="_blank" class="list-group-item">Report Assessment<span class="badge"></span></a>
         <form action="/logout" method="post">
             <%- include('../csrf/csrf.ejs') %>
              <button type="submit" class="list-group-item">Logout</button>

@@ -18,8 +18,8 @@ const morgan = require('morgan');
 
 
 const app = express();
-app.set('view engine','ejs');
-app.set('views','views');
+app.set('view engine','ejs'); //setting ejs
+app.set('views','views'); //lupa buat apa //buat set views
 
 const fileStorage = multer.diskStorage({
     destination: (req,file,callback) =>{
